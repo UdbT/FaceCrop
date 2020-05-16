@@ -43,7 +43,7 @@ class TestFacecrop(unittest.TestCase):
     def test_get_largest_face(self):
         # Should return largest cropped face (numpy.ndarray)
         image = facecrop.load_image(image_path='./sample/2.jpg')
-        lg_face = facecrop.get_largest_face(image=image, faces=facecrop.detect_face(image))
+        lg_face, bound = facecrop.get_largest_face(image=image, faces=facecrop.detect_face(image))
         self.assertIsInstance(lg_face, numpy.ndarray)
 
         # Compare if it is the same largest face
@@ -56,7 +56,7 @@ class TestFacecrop(unittest.TestCase):
         # Image should be saved to specified path
         output_path = './tests/result/0.jpeg'
         if os.path.exists(output_path): os.remove(output_path)
-        facecrop.detect_largest_face(image_path=input_image, output_dir=os.path.split(output_path)[0])
+        lg_face, bound = facecrop.detect_largest_face(image_path=input_image, output_dir=os.path.split(output_path)[0])
         self.assertTrue(os.path.exists(output_path))
 
 if __name__ == "__main__":

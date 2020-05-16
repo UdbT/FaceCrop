@@ -9,7 +9,7 @@ import cv2
 import dlib
 import numpy
 
-def load_image(image_path:str) -> numpy.ndarray:
+def load_image(image_path:str):
     '''
     Return loaded image from the specified file.
     
@@ -25,7 +25,7 @@ def load_image(image_path:str) -> numpy.ndarray:
 
     Returns
     ----------
-    numpy.ndarray (3d array of loaded image)
+    3d array of loaded image: numpy.ndarray
     '''
 
     # Read image
@@ -40,7 +40,7 @@ def load_image(image_path:str) -> numpy.ndarray:
     
     return image
     
-def detect_face(image:numpy.ndarray) -> dlib.rectangles:
+def detect_face(image:numpy.ndarray):
     '''
     Return face detected bounds
     
@@ -55,7 +55,7 @@ def detect_face(image:numpy.ndarray) -> dlib.rectangles:
 
     Returns
     ----------
-    dlib.rectangles (bound of detected faces)
+    bound of detected faces: dlib.rectangles
     '''
     # Initialize hog based face detector
     hog_face_detector = dlib.get_frontal_face_detector()
@@ -67,20 +67,22 @@ def detect_face(image:numpy.ndarray) -> dlib.rectangles:
 
     return faces_hog
 
-def get_largest_face(image:numpy.ndarray, faces:dlib.rectangles) -> numpy.ndarray:
+def get_largest_face(image:numpy.ndarray, faces:dlib.rectangles):
     '''
     Return largest cropped face from given bounds
     
     Parameters
     ----------
-    image: numpy.ndarray
+    image: numpy.ndarray,
     faces: dlib.rectangles
     
     Returns
     ----------
-    numpy.ndarray (largest cropped face)
+    largest cropped face: numpy.ndarray,
+    bound: dict
     '''
     face_img = None
+    bound = None
 
     # Loop over detected faces
     for face in faces:
@@ -91,13 +93,14 @@ def get_largest_face(image:numpy.ndarray, faces:dlib.rectangles) -> numpy.ndarra
         if not (face_img is None):
             if sub_face.size > face_img.size:
                 face_img = sub_face
+                bound = {'top': face.top(), 'buttom': face.bottom(), 'left': face.left(), 'right': face.right()}
         else:
             face_img = sub_face
     
-    return face_img
+    return face_img, bound
 
 
-def detect_largest_face(image_path:str, output_dir:str='') -> numpy.ndarray:
+def detect_largest_face(image_path:str, output_dir:str=''):
     '''
     Return and save largest cropped face from given image to specified directory
 
@@ -109,11 +112,12 @@ def detect_largest_face(image_path:str, output_dir:str='') -> numpy.ndarray:
     
     Returns
     ----------
-    numpy.ndarray (largest cropped face)
+    largest cropped face: numpy.ndarray,
+    bound: dict
     '''
 
     image = load_image(image_path)
-    largest_face = get_largest_face(image, detect_face(image))
+    largest_face, bound = get_largest_face(image, detect_face(image))
 
     # Save image to specified directory
     if output_dir:
@@ -122,12 +126,14 @@ def detect_largest_face(image_path:str, output_dir:str='') -> numpy.ndarray:
             os.makedirs(output_dir)
         cv2.imwrite(os.path.join(output_dir, os.path.split(image_path)[1]), largest_face)
 
-    return largest_face
+    return largest_face, bound
 
 if __name__ == '__main__':
 
     img_path = './sample/0.jpeg'
 
     # Display output image
-    cv2.imshow("Face", detect_largest_face(image_path=img_path, output_dir='./result'))
+    lg_face, bound = detect_largest_face(image_path=img_path, output_dir='./result')
+    print(bound)
+    cv2.imshow("Face", lg_face)
     cv2.waitKey(3000)
