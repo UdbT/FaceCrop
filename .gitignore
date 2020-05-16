@@ -1,1 +1,11 @@
 .vscode/
+st-env/
+build/
+dist/
+facecrop.egg-info/
+**/__pycache__/
+
+result/
+
+.DS_Store
+**/.DS_Store
