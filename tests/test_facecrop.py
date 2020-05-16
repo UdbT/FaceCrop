@@ -18,7 +18,7 @@ class TestFacecrop(unittest.TestCase):
 
     def test_load_image(self):
         # Should return image (numpy.ndarray)
-        image = facecrop.load_image(image_path='./sample/0.jpeg')
+        image = facecrop.load_image(image_path='./sample/0.jpg')
         self.assertIsInstance(image, numpy.ndarray)
     
     def test_load_image_exception(self):
@@ -32,13 +32,13 @@ class TestFacecrop(unittest.TestCase):
     
     def test_detect_face(self):
         # Should return faces (dlib.rectangles)
-        faces = facecrop.detect_face(image=facecrop.load_image(image_path='./sample/0.jpeg'))
+        faces = facecrop.detect_face(image=facecrop.load_image(image_path='./sample/0.jpg'))
         self.assertIsInstance(faces, dlib.rectangles)
 
     def test_detect_face_exception(self):
         # No face detected exception
         with self.assertRaises(ValueError):
-            faces = facecrop.detect_face(image=facecrop.load_image(image_path='./sample/blank.jpeg'))
+            faces = facecrop.detect_face(image=facecrop.load_image(image_path='./sample/blank.jpg'))
 
     def test_get_largest_face(self):
         # Should return largest cropped face (numpy.ndarray)
@@ -51,10 +51,10 @@ class TestFacecrop(unittest.TestCase):
         self.assertGreaterEqual(mssim, .9)
 
     def test_detect_largest_face(self):
-        input_image = './sample/0.jpeg'
+        input_image = './sample/0.jpg'
 
         # Image should be saved to specified path
-        output_path = './tests/result/0.jpeg'
+        output_path = './tests/result/0.jpg'
         if os.path.exists(output_path): os.remove(output_path)
         lg_face, bound = facecrop.detect_largest_face(image_path=input_image, output_dir=os.path.split(output_path)[0])
         self.assertTrue(os.path.exists(output_path))
