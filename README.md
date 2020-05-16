@@ -1,1 +1,4 @@
-# Python package to crop faces from images. Given an image containing a face, the package should provide functionality to crop out the face from the image and return it.
+# FaceCrop package
+To crop and return face from the given image.
+# API
+Provide API for user to get bounding box of the largest face in the given image.
