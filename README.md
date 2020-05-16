@@ -2,6 +2,7 @@
 To crop and return face from the given image.
 ```
     import numpy as np
+    import cv2
 
     img_path = <IMAGE_PATH>
 
