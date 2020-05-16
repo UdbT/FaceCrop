@@ -134,7 +134,7 @@ if __name__ == '__main__':
 
     img_path = './sample/3.jpg'
 
-    # Display output image
+    # Detect largest face
     lg_face, bound = detect_largest_face(image_path=img_path, output_dir='./result')
 
     # Read image
@@ -150,10 +150,8 @@ if __name__ == '__main__':
 
     # Display output image
     im1 = cv2.resize(image,(400,300))
-
     im2 = cv2.resize(lg_face,(400,300))
     imstack = np.concatenate((im1, im2), axis=1)
-    # imstack = np.hstack((im1, im2))
 
     cv2.imshow("Largest face", imstack)
     cv2.waitKey(5000)
