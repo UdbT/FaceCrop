@@ -3,11 +3,13 @@ To crop and return face from the given image.
 ```
     import numpy as np
     import cv2
+    
+    import facecrop
 
     img_path = <IMAGE_PATH>
 
     # Detect largest face
-    lg_face, bound = detect_largest_face(image_path=img_path)
+    lg_face, bound = facecrop.detect_largest_face(image_path=img_path)
 
     # Read image
     image = cv2.imread(img_path)
