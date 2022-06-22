@@ -19,7 +19,7 @@ setuptools.setup(
                         "joblib==0.14.1",
                         "kiwisolver==1.2.0",
                         "matplotlib==3.2.1",
-                        "numpy==1.18.4",
+                        "numpy==1.22.0",
                         "opencv-contrib-python==4.2.0.34",
                         "pyparsing==2.4.7",
                         "python-dateutil==2.8.1",
