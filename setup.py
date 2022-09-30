@@ -16,7 +16,7 @@ setuptools.setup(
     install_requires=[
                         "cycler==0.10.0",
                         "dlib==19.19.0",
-                        "joblib==0.14.1",
+                        "joblib==1.2.0",
                         "kiwisolver==1.2.0",
                         "matplotlib==3.2.1",
                         "numpy==1.18.4",
